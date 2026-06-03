@@ -19,7 +19,7 @@ function directCandidates(code) {
 async function githubDirMatches(code, dir) {
   const c = sanitize(code);
   const url = `https://api.github.com/repos/Jxck-S/airline-logos/contents/${dir}?ref=main`;
-  const r = await fetch(url, { headers: { 'User-Agent': 'PlanePulse' } });
+  const r = await fetch(url, { headers: { 'User-Agent': 'SpotPlane' } });
   if (!r.ok) return [];
   const items = await r.json();
   if (!Array.isArray(items)) return [];

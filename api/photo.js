@@ -21,7 +21,7 @@ module.exports = async function handler(req, res) {
     const apiUrl = `https://api.planespotters.net/pub/photos/reg/${encodeURIComponent(reg)}`;
     const apiResp = await fetch(apiUrl, {
       headers: {
-        'User-Agent': 'PlanePulse/1.0 (+https://planepulse.vercel.app)',
+        'User-Agent': 'SpotPlane/1.0 (+https://planepulse.vercel.app)',
         'Accept': 'application/json,text/html;q=0.9,*/*;q=0.8'
       }
     });
@@ -42,7 +42,7 @@ module.exports = async function handler(req, res) {
     const pageUrl = `https://www.planespotters.net/photos/reg/${encodeURIComponent(reg)}`;
     const pageResp = await fetch(pageUrl, {
       headers: {
-        'User-Agent': 'PlanePulse/1.0 (+https://planepulse.vercel.app)',
+        'User-Agent': 'SpotPlane/1.0 (+https://planepulse.vercel.app)',
         'Accept': 'text/html,*/*;q=0.8'
       }
     });

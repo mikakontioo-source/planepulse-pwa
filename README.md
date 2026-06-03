@@ -1,8 +1,3 @@
-PlanePulse PWA
+SpotPlane PWA
 
-Vercel settings:
-- Output Directory: public
-- Build Command: empty
-- Install Command: empty
-
-This version uses a darker aircraft photo overlay and resolves airline logos via /api/logo.
+Deploy to Vercel with Output Directory: public, empty Build Command and empty Install Command.
