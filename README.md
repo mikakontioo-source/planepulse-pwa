@@ -1,23 +1,17 @@
-# PlanePulse PWA v19
+# PlanePulse PWA - Vercel public output version
 
-Static Vercel PWA. No npm, no package.json, no build step.
+This version is intentionally static: no npm, no build step.
 
-Upload these files/folders to GitHub root:
+GitHub root should contain only:
 - api/
 - public/
-- index.html
-- manifest.webmanifest
-- icon.svg
-- sw.js
 - vercel.json
 - README.md
-
-Do NOT upload package.json, package-lock.json, node_modules, src, dist or server.js.
 
 Vercel settings:
 - Framework Preset: Other / No Framework
 - Install Command: empty
 - Build Command: empty
-- Output Directory: empty
+- Output Directory: public
 
-After deploy, hard refresh browser or remove old PWA icon from iPad and add again.
+Do not upload package.json, package-lock.json, node_modules, src, dist or server.js.
