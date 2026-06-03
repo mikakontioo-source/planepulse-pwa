@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>PlanePulse</title>
+  <meta name="theme-color" content="#0f0f0f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="PlanePulse" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <style>
+    :root{--bg:#0f0f0f;--panel:#121212;--yellow:#FFC800;--text:#f5f3ea;--muted:#8c8c8c;--line:rgba(255,200,0,.45);--hair:rgba(255,255,255,.13)}
+    *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at 50% 15%,rgba(255,200,0,.12),transparent 30%),var(--bg);color:var(--text);font-family:Inter,Arial,Helvetica,sans-serif;min-height:100vh;overflow:hidden}.photoBg{position:fixed;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .35s ease;z-index:0}.photoBg.show{opacity:1}.darkOverlay{position:fixed;inset:0;background:rgba(0,0,0,.50);z-index:1;pointer-events:none}.app{position:relative;z-index:2}
+    .app{width:100vw;height:100vh;padding:2.2vw 2.8vw 1.6vw;display:flex;flex-direction:column;gap:2.2vh}
+    .top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;font-weight:800;letter-spacing:.02em}.brand{font-size:1.5vw;letter-spacing:.42em}.brand span{color:var(--yellow)}.time,.weather{font-size:2.1vw;display:flex;gap:.8vw;align-items:center}.weather{justify-content:flex-end}.miniIcon{color:var(--yellow);font-size:1.25vw}.gear{border:1px solid rgba(255,200,0,.45);border-radius:50%;width:3vw;height:3vw;display:flex;align-items:center;justify-content:center;color:var(--yellow);font-size:1.2vw;margin-left:1vw;cursor:pointer}
+    .line{height:1px;background:var(--line)}
+    .hero{flex:1;display:grid;grid-template-columns:22% 1fr 22%;align-items:center;min-height:0}.side{height:76%;border-left:1px solid var(--hair);border-right:1px solid var(--hair);display:flex;align-items:center;justify-content:center}.airline{text-align:center}.logoCircle{width:8.3vw;height:8.3vw;border-radius:50%;background:var(--yellow);color:#050505;display:flex;align-items:center;justify-content:center;font-size:2vw;font-weight:950;margin:0 auto 1.5vw}.airlineName{font-size:2vw;font-weight:900}.center{text-align:center;align-self:stretch;display:flex;flex-direction:column;justify-content:center}.label{color:var(--muted);font-size:1.25vw;font-weight:800;letter-spacing:.32em;margin-bottom:1.1vh}.flight{font-size:8vw;line-height:.9;font-weight:950;color:var(--yellow);letter-spacing:-.06em;text-shadow:0 0 32px rgba(255,200,0,.16)}.plane{font-size:5.2vw;color:var(--text);line-height:1;margin:4.2vh 0 1.8vh;transform:rotate(-8deg)}.type{font-size:2vw;letter-spacing:.18em;font-weight:900;color:var(--text)}.next{margin-top:2vh;font-size:1.15vw;letter-spacing:.05em;color:#a9a9a9;font-weight:700}.next .sep{color:var(--yellow);opacity:.75;margin:0 .75vw}.nav{height:76%;border-left:1px solid var(--hair);border-right:1px solid var(--hair);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2vh}.trend{font-size:2.4vw;color:var(--yellow);height:3vw;display:flex;align-items:center}.trend.pulse{animation:pulse 1.8s ease-in-out infinite}@keyframes pulse{0%,100%{opacity:.75;transform:scale(.94)}50%{opacity:1;transform:scale(1.06)}}.compass{width:9vw;height:9vw;border:1px solid rgba(255,255,255,.22);border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(255,255,255,.04),transparent 65%)}.needle{width:0;height:0;border-left:1.15vw solid transparent;border-right:1.15vw solid transparent;border-bottom:3.8vw solid var(--yellow);transform-origin:50% 70%}.compass b{position:absolute;font-size:.9vw;color:#fff}.n{top:.7vw}.s{bottom:.7vw}.w{left:.8vw}.e{right:.8vw}.dir{font-size:1.7vw;color:var(--yellow);font-weight:950;letter-spacing:.05em}.metrics{height:22vh;display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.metric{display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--hair)}.metric:last-child{border-right:none}.metricIcon{color:var(--yellow);font-size:1.45vw;margin-bottom:.8vh}.metricLabel{font-size:1.12vw;color:#a4a4a4;text-transform:uppercase;letter-spacing:.28em;font-weight:800}.value{font-size:4.2vw;font-weight:950;line-height:1.05;margin:1.1vh 0 .1vh}.unit{font-size:1.6vw;font-weight:900;color:#d9d9d9}.status{height:2.5vh;color:#777;font-size:.95vw;letter-spacing:.08em;display:flex;justify-content:space-between;align-items:center}.settings{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center}.settings.open{display:flex}.modal{width:min(520px,92vw);background:#171717;border:1px solid rgba(255,200,0,.35);border-radius:22px;padding:26px;box-shadow:0 20px 80px rgba(0,0,0,.7)}.modal h2{margin:0 0 18px;color:var(--yellow)}.field{margin:14px 0}.field label{display:block;color:#aaa;font-size:13px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px}.field input,.field select{width:100%;background:#0b0b0b;color:#fff;border:1px solid #333;border-radius:10px;padding:12px;font-size:16px}.buttons{display:flex;gap:12px;justify-content:flex-end;margin-top:18px}.buttons button{background:var(--yellow);border:0;border-radius:10px;padding:12px 16px;font-weight:900;cursor:pointer}.buttons .ghost{background:#333;color:#fff}@media(max-width:900px){.flight{font-size:13vw}.brand{font-size:3vw}.time,.weather{font-size:4vw}.hero{grid-template-columns:20% 1fr 20%}.metrics{height:20vh}.value{font-size:6vw}.type{font-size:3.2vw}.next{font-size:2vw}.logoCircle{width:11vw;height:11vw}.airlineName{font-size:2.7vw}.compass{width:13vw;height:13vw}.app{padding:4vw}}
+  </style>
+</head>
+<body>
+  <div id="photoBg" class="photoBg"></div><div class="darkOverlay"></div>
+  <div class="app">
+    <header class="top"><div class="time"><span class="miniIcon">◷</span><span id="time">--:--</span></div><div class="brand">PLANE<span>PULSE</span></div><div class="weather"><span class="miniIcon">♨</span><span id="temp">--°C</span><div class="gear" id="openSettings">⚙</div></div></header>
+    <div class="line"></div>
+    <main class="hero">
+      <section class="side"><div class="airline"><div class="logoCircle" id="airlineLogo">--</div><div class="airlineName" id="airlineName">AIRLINE</div></div></section>
+      <section class="center"><div class="label">FLIGHT</div><div class="flight" id="flightCode">----</div><div class="plane">✈</div><div class="type" id="aircraftType">AIRCRAFT TYPE</div><div class="next" id="nextNearby">-- km <span class="sep">|</span> -- km</div></section>
+      <section class="nav"><div id="trend" class="trend">→</div><div class="compass"><b class="n">N</b><b class="s">S</b><b class="w">W</b><b class="e">E</b><div class="needle" id="needle"></div></div><div class="dir" id="direction">--</div></section>
+    </main>
+    <section class="metrics"><div class="metric"><div class="metricIcon">⌁</div><div class="metricLabel">Distance</div><div class="value" id="distance">--</div><div class="unit">km</div></div><div class="metric"><div class="metricIcon">✈</div><div class="metricLabel">Altitude</div><div class="value" id="altitude">--</div><div class="unit">m</div></div><div class="metric"><div class="metricIcon">↗</div><div class="metricLabel">Speed</div><div class="value" id="speed">--</div><div class="unit">km/h</div></div></section>
+    <footer class="status"><span id="dataStatus">LIVE ADS-B DATA</span><span id="updated">UPDATED --</span></footer>
+  </div>
+  <div class="settings" id="settings"><div class="modal"><h2>Settings</h2>
+  <div class="field"><label>Location source</label><select id="locationSource"><option value="fixed">Fixed location</option><option value="gps">Device GPS</option></select></div>
+  <div class="field"><label>Latitude</label><input id="lat" type="number" step="0.0001"></div><div class="field"><label>Longitude</label><input id="lon" type="number" step="0.0001"></div>
+  <div class="field"><label>GPS status</label><div id="gpsStatus" style="color:#aaa;font-size:14px">Not active</div></div>
+  <div class="field"><label>Radius km</label><input id="radius" type="number" min="5" max="250"></div><div class="field"><label>Display mode</label><select id="mode"><option value="closest">Closest aircraft</option><option value="lowest">Lowest aircraft</option><option value="audible">Most audible aircraft</option></select></div>
+  <div class="field"><label>Aircraft photo background</label><select id="photoBgEnabled"><option value="on">On</option><option value="off">Off</option></select></div>
+  <div class="field"><label>Dark overlay</label><select id="overlayAmount"><option value="0.5">50%</option><option value="0.6">60%</option><option value="0.4">40%</option></select></div>
+  <div class="buttons"><button class="ghost" id="closeSettings">Cancel</button><button id="saveSettings">Save</button></div></div></div>
+<script>
+const $=id=>document.getElementById(id); const DEG=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
+const airlineNames={FIN:'FINNAIR',RYR:'RYANAIR',DLH:'LUFTHANSA',SAS:'SAS',KLM:'KLM',BAW:'BRITISH AIRWAYS',AFR:'AIR FRANCE',NAX:'NORWEGIAN',TAY:'TNT AIRWAYS'};
+let settings=JSON.parse(localStorage.getItem('ppSettings')||'{"lat":60.293,"lon":25.037,"radius":50,"mode":"closest","locationSource":"fixed","photoBgEnabled":"on","overlayAmount":0.5}');
+settings={lat:60.293,lon:25.037,radius:50,mode:'closest',locationSource:'fixed',photoBgEnabled:'on',overlayAmount:0.5,...settings};
+let lastUpdate=null; let lastPhotoReg=''; let gpsWatch=null;
+function tick(){const d=new Date(); $('time').textContent=d.toLocaleTimeString('fi-FI',{hour:'2-digit',minute:'2-digit'}); if(lastUpdate) $('updated').textContent='UPDATED '+Math.max(0,Math.round((Date.now()-lastUpdate)/1000))+' SECONDS AGO'} setInterval(tick,1000); tick();
+function km(a,b,c,d){const R=6371,toRad=x=>x*Math.PI/180; const p1=toRad(a),p2=toRad(c),dp=toRad(c-a),dl=toRad(d-b); const x=Math.sin(dp/2)**2+Math.cos(p1)*Math.cos(p2)*Math.sin(dl/2)**2; return 2*R*Math.atan2(Math.sqrt(x),Math.sqrt(1-x));}
+function bearing(lat1,lon1,lat2,lon2){const r=x=>x*Math.PI/180,d=x=>x*180/Math.PI; const y=Math.sin(r(lon2-lon1))*Math.cos(r(lat2)); const x=Math.cos(r(lat1))*Math.sin(r(lat2))-Math.sin(r(lat1))*Math.cos(r(lat2))*Math.cos(r(lon2-lon1)); return (d(Math.atan2(y,x))+360)%360;}
+function dirName(deg){return DEG[Math.round(deg/22.5)%16]}
+function fmt(n,d=0){return Number.isFinite(n)?n.toLocaleString('en-US',{maximumFractionDigits:d,minimumFractionDigits:d}):'--'}
+function norm(a){const cs=(a.flight||a.callsign||a.r||'').trim()||a.hex||'----'; const alt=a.alt_baro==='ground'?0:(a.alt_baro||a.alt_geom||0); const sp=a.gs||a.speed||0; const tr=a.track||0; const dist=km(settings.lat,settings.lon,a.lat,a.lon); const br=bearing(settings.lat,settings.lon,a.lat,a.lon); const vr=a.baro_rate||a.geom_rate||0; return {...a,callsign:cs,registration:(a.r||a.reg||'').trim().toUpperCase(),altM:alt*0.3048,speedKmh:sp*1.852,distKm:dist,bearing:br,dir:dirName(br),type:a.t||a.desc||'AIRCRAFT',vr};}
+function score(a){if(settings.mode==='lowest') return a.altM+(a.distKm*4); if(settings.mode==='audible') return a.distKm*2+a.altM/450; return a.distKm;}
+function airlineCode(c){return (c||'').replace(/[^A-Z]/g,'').slice(0,3)}
+function applyOverlay(){document.querySelector('.darkOverlay').style.background=`rgba(0,0,0,${settings.overlayAmount||0.5})`}
+async function setAircraftPhoto(main){
+  const bg=$('photoBg'); applyOverlay();
+  if(settings.photoBgEnabled!=='on'){bg.classList.remove('show');bg.style.backgroundImage='';return}
+  const reg=main.registration||'';
+  if(!reg || reg===lastPhotoReg) return;
+  lastPhotoReg=reg;
+  try{const r=await fetch(`/api/photo?reg=${encodeURIComponent(reg)}`); const j=await r.json();
+    if(j.photoUrl){bg.style.backgroundImage=`url("${j.photoUrl}")`; bg.classList.add('show')}
+    else {bg.classList.remove('show'); bg.style.backgroundImage=''}
+  }catch(e){bg.classList.remove('show'); bg.style.backgroundImage=''}
+}
+function render(list){if(!list.length){$('flightCode').textContent='NO DATA';return} list.sort((a,b)=>score(a)-score(b)); const main=list[0]; setAircraftPhoto(main); const nearby=list.filter(x=>x.hex!==main.hex).sort((a,b)=>a.distKm-b.distKm).slice(0,2); const code=airlineCode(main.callsign); $('airlineLogo').textContent=code||'✈'; $('airlineName').textContent=airlineNames[code]||code||'AIRLINE'; $('flightCode').textContent=main.callsign; $('aircraftType').textContent=main.type; $('nextNearby').innerHTML=(nearby[0]?`${nearby[0].callsign} ${fmt(nearby[0].distKm,1)} KM`:'--')+' <span class="sep">|</span> '+(nearby[1]?`${nearby[1].callsign} ${fmt(nearby[1].distKm,1)} KM`:'--'); $('distance').textContent=fmt(main.distKm,1); $('altitude').textContent=fmt(Math.round(main.altM)); $('speed').textContent=fmt(Math.round(main.speedKmh)); $('direction').textContent=main.dir; $('needle').style.transform=`rotate(${main.bearing}deg)`; const t=$('trend'); t.classList.remove('pulse'); if(main.vr>120){t.textContent='↗';t.classList.add('pulse')} else if(main.vr<-120){t.textContent='↘';t.classList.add('pulse')} else t.textContent='→';}
+async function load(){try{const r=await fetch(`/api/aircraft?lat=${settings.lat}&lon=${settings.lon}&radius=${settings.radius}`); const j=await r.json(); const arr=(j.aircraft||[]).filter(a=>a.lat&&a.lon).map(norm).filter(a=>a.distKm<=settings.radius); render(arr); lastUpdate=Date.now(); $('dataStatus').textContent='LIVE ADS-B DATA'}catch(e){$('dataStatus').textContent='DATA ERROR'; console.error(e)}}
+async function weather(){try{const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${settings.lat}&longitude=${settings.lon}&current=temperature_2m`); const j=await r.json(); $('temp').textContent=fmt(j.current.temperature_2m,1)+'°C'}catch(e){}}
+function startGps(){
+  if(gpsWatch) navigator.geolocation.clearWatch(gpsWatch);
+  if(settings.locationSource!=='gps') { $('gpsStatus').textContent='Fixed location'; return; }
+  if(!('geolocation' in navigator)){ $('gpsStatus').textContent='GPS not available on this device'; return; }
+  $('gpsStatus').textContent='Requesting GPS permission...';
+  gpsWatch=navigator.geolocation.watchPosition(pos=>{
+    settings.lat=+pos.coords.latitude.toFixed(5); settings.lon=+pos.coords.longitude.toFixed(5);
+    localStorage.setItem('ppSettings',JSON.stringify(settings));
+    $('lat').value=settings.lat; $('lon').value=settings.lon;
+    $('gpsStatus').textContent=`Using device GPS ±${Math.round(pos.coords.accuracy)} m`;
+    load(); weather();
+  },err=>{ $('gpsStatus').textContent='GPS permission denied or unavailable. Using saved location.'; },{enableHighAccuracy:true,maximumAge:60000,timeout:10000});
+}
+function initSettings(){ $('lat').value=settings.lat; $('lon').value=settings.lon; $('radius').value=settings.radius; $('mode').value=settings.mode; $('locationSource').value=settings.locationSource; $('photoBgEnabled').value=settings.photoBgEnabled; $('overlayAmount').value=String(settings.overlayAmount); $('openSettings').onclick=()=>$('settings').classList.add('open'); $('closeSettings').onclick=()=>$('settings').classList.remove('open'); $('saveSettings').onclick=()=>{settings={...settings,lat:+$('lat').value,lon:+$('lon').value,radius:+$('radius').value,mode:$('mode').value,locationSource:$('locationSource').value,photoBgEnabled:$('photoBgEnabled').value,overlayAmount:+$('overlayAmount').value}; localStorage.setItem('ppSettings',JSON.stringify(settings)); $('settings').classList.remove('open'); lastPhotoReg=''; applyOverlay(); startGps(); load(); weather();}; startGps(); applyOverlay();}
+initSettings(); load(); weather(); setInterval(load,10000); setInterval(weather,600000); if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{})}
+</script>
+</body>
+</html>
