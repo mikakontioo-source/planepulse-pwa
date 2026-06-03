@@ -1,10 +1,4 @@
-PlanePulse PWA v21
-
-Upload only these to GitHub:
-- api/
-- public/
-- vercel.json
-- README.md
+PlanePulse PWA v22
 
 Vercel settings:
 - Framework: Other / No Framework
@@ -12,7 +6,13 @@ Vercel settings:
 - Build Command: empty
 - Output Directory: public
 
-Font:
-This package uses Stack Sans Text if available at:
-public/fonts/StackSansText.woff2
-If that file is not present, the browser falls back to Segoe UI/system font.
+Upload only:
+- api/
+- public/
+- vercel.json
+- README.md
+
+Do not upload package.json, src, dist, server.js or node_modules.
+
+Optional font:
+- Add your licensed font file as public/fonts/StackSansText.woff2
