@@ -1,38 +1,32 @@
-# PlanePulse PWA v1.2
+# PlanePulse PWA v1.3 API fix
 
-Static Vercel version. No npm, no build step.
+Static Vercel PWA. No npm/build required.
 
-Upload only these to GitHub root:
-
+Upload only these files/folders to GitHub root:
 - api/
 - public/
 - index.html
-- manifest.webmanifest
 - icon.svg
+- manifest.webmanifest
 - sw.js
 - vercel.json
 - README.md
 
-Do not upload:
-
+Do NOT upload:
 - package.json
 - package-lock.json
-- node_modules
-- src
-- dist
+- node_modules/
+- src/
+- dist/
 - server.js
 
 Vercel settings:
-
-- Framework Preset: Other / No Framework
+- Framework: Other / Static
 - Install Command: empty
 - Build Command: empty
 - Output Directory: empty
 
 Changes:
-
-- Settings opens as a fixed overlay above the app
-- Wind speed added next to temperature
-- Device GPS / Fixed location setting
-- Aircraft photo background with 50% dark overlay
-- Airplane icon remains visible even when a photo is found
+- Fixes ADS-B response field: supports both `ac` and `aircraft`
+- API functions converted to CommonJS to avoid ESM warning
+- Keeps GPS, weather/wind, aircraft photo background and 50% overlay
