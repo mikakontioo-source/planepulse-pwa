@@ -1,17 +1,18 @@
-# PlanePulse PWA - Vercel public output version
+PlanePulse PWA v21
 
-This version is intentionally static: no npm, no build step.
-
-GitHub root should contain only:
+Upload only these to GitHub:
 - api/
 - public/
 - vercel.json
 - README.md
 
 Vercel settings:
-- Framework Preset: Other / No Framework
+- Framework: Other / No Framework
 - Install Command: empty
 - Build Command: empty
 - Output Directory: public
 
-Do not upload package.json, package-lock.json, node_modules, src, dist or server.js.
+Font:
+This package uses Stack Sans Text if available at:
+public/fonts/StackSansText.woff2
+If that file is not present, the browser falls back to Segoe UI/system font.
