@@ -1,25 +1,38 @@
-# PlanePulse PWA 1.1
+# PlanePulse PWA v1.2
 
 Static Vercel version. No npm, no build step.
 
-New features:
-- Device GPS / Fixed Location in Settings
-- Aircraft photo background lookup by aircraft registration
-- 50% dark overlay over photo background
-- Airplane icon remains visible even when photo background is shown
+Upload only these to GitHub root:
 
-Upload these files to the root of the GitHub repo:
-- index.html
 - api/
+- public/
+- index.html
 - manifest.webmanifest
 - icon.svg
 - sw.js
 - vercel.json
 - README.md
 
+Do not upload:
+
+- package.json
+- package-lock.json
+- node_modules
+- src
+- dist
+- server.js
+
 Vercel settings:
+
+- Framework Preset: Other / No Framework
 - Install Command: empty
 - Build Command: empty
 - Output Directory: empty
 
-If old UI remains on iPad, delete the Home Screen icon, clear Safari cache for the site, and add it again.
+Changes:
+
+- Settings opens as a fixed overlay above the app
+- Wind speed added next to temperature
+- Device GPS / Fixed location setting
+- Aircraft photo background with 50% dark overlay
+- Airplane icon remains visible even when a photo is found
