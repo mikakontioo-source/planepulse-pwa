@@ -1,8 +1,8 @@
-PlanePulse PWA v23
+PlanePulse PWA
 
 Vercel settings:
-- Install Command: empty
-- Build Command: empty
 - Output Directory: public
+- Build Command: empty
+- Install Command: empty
 
-Upload only: api/, public/, vercel.json, README.md
+This version uses a darker aircraft photo overlay and resolves airline logos via /api/logo.
