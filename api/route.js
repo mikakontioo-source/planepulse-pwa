@@ -7,8 +7,12 @@ function cleanFlight(v) {
 function parseRouteFromText(text) {
   if (!text) return '';
   const t = String(text).toUpperCase().replace(/&RARR;|&RAQUO;|&#8594;/g, '→');
-  const m = t.match(/\b([A-Z]{3,4})\s*(?:→|-|TO|&GT;)\s*([A-Z]{3,4})\b/);
-  return m ? `${m[1]} → ${m[2]}` : '';
+  if (/VRS|DOCS|DOCUMENTATION|LOOKUP|ERROR|NOT FOUND/.test(t)) return '';
+  const m = t.match(/\b([A-Z]{3})\s*(?:→|-|TO|&GT;)\s*([A-Z]{3})\b/);
+  if (!m) return '';
+  const a = m[1], b = m[2];
+  if (a === b || ['VRS','DOC','API','WWW'].includes(a) || ['DOC','API','WWW'].includes(b)) return '';
+  return `${a} → ${b}`;
 }
 
 module.exports = async function handler(req, res) {
