@@ -8,8 +8,22 @@ function directCandidates(code) {
   const c = sanitize(code);
   const low = c.toLowerCase();
   const base = 'https://raw.githubusercontent.com/Jxck-S/airline-logos/main';
-  const dirs = ['flightaware_logos', 'radarbox_logos', 'custom_logos', 'logos'];
+  const iataMap = { FIN:'AY', RYR:'FR', DLH:'LH', SAS:'SK', KLM:'KL', AFR:'AF', BAW:'BA', AAL:'AA', UAL:'UA', DAL:'DL', EZY:'U2', WZZ:'W6', THY:'TK', QTR:'QR', UAE:'EK', SWR:'LX', IBE:'IB', PGT:'PC', NAX:'DY', NSZ:'N0', TAY:'3V' };
+  const iata = iataMap[c] || (c.length === 2 ? c : '');
   const out = [];
+  if (iata) {
+    out.push(
+      `https://content.airhex.com/content/logos/airlines_${iata}_r.svg`,
+      `https://content.airhex.com/content/logos/airlines_${iata}_s.svg`,
+      `https://content.airhex.com/content/logos/airlines_${iata}_700_200_r.png`,
+      `https://images.kiwi.com/airlines/64x64/${iata}.png`
+    );
+  }
+  out.push(
+    `https://content.airhex.com/content/logos/airlines_${c}_r.svg`,
+    `https://content.airhex.com/content/logos/airlines_${c}_s.svg`
+  );
+  const dirs = ['flightaware_logos', 'radarbox_logos', 'custom_logos', 'logos'];
   for (const d of dirs) {
     out.push(`${base}/${d}/${c}.png`, `${base}/${d}/${low}.png`);
   }

@@ -1,27 +1,16 @@
-# SpotPlane PWA v30
+# SpotPlane PWA v31
 
-Static Vercel PWA package.
+Static Vercel/PWA build.
 
-## Vercel settings
-
+Vercel settings:
 - Install Command: empty
 - Build Command: empty
-- Output Directory: `public`
+- Output Directory: public
 
-## Upload to GitHub
-
-Upload only:
-
-- `api/`
-- `public/`
-- `vercel.json`
-- `README.md`
-
-Do not upload `package.json`, `node_modules`, `src`, `dist`, or `server.js`.
-
-## New in v30
-
-- Settings includes About text and contact information
-- Buy Me a Coffee support link in Settings
-- Improved mobile responsive layout for phones
-- Keeps SpotPlane v29 visual style and branding
+Changes in v31:
+- route label replaces FLIGHT when a route is found
+- AirHex logo candidates first, fallback logo sources remain
+- airline background circle removed
+- compass base stays fixed and only the arrow rotates
+- new climbing/descending aircraft SVG indicator
+- aircraft-photo overlay transparency lightened from 85% to 70%
