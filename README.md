@@ -14,3 +14,6 @@ Changes in v31:
 - compass base stays fixed and only the arrow rotates
 - new climbing/descending aircraft SVG indicator
 - aircraft-photo overlay transparency lightened from 85% to 70%
+
+
+Version v31.5: restored the reserved airline logo area to the earlier size and expanded airline logo source candidates: AirHex SVG/PNG, Aviasales/Travelpayouts, Kiwi, and Jxck-S fallback.

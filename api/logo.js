@@ -15,13 +15,18 @@ function directCandidates(code) {
     out.push(
       `https://content.airhex.com/content/logos/airlines_${iata}_r.svg`,
       `https://content.airhex.com/content/logos/airlines_${iata}_s.svg`,
-      `https://content.airhex.com/content/logos/airlines_${iata}_700_200_r.png`,
-      `https://images.kiwi.com/airlines/64x64/${iata}.png`
+      `https://content.airhex.com/content/logos/airlines_${iata}_350_100_r.png`,
+      `https://content.airhex.com/content/logos/airlines_${iata}_200_200_s.png`,
+      `https://images.kiwi.com/airlines/64x64/${iata}.png`,
+      `https://pics.avs.io/200/80/${iata}.png`,
+      `https://img.wway.io/pics/root/${iata}@png?exar=1&rs=fit:300:120`
     );
   }
   out.push(
     `https://content.airhex.com/content/logos/airlines_${c}_r.svg`,
-    `https://content.airhex.com/content/logos/airlines_${c}_s.svg`
+    `https://content.airhex.com/content/logos/airlines_${c}_s.svg`,
+    `https://content.airhex.com/content/logos/airlines_${c}_350_100_r.png`,
+    `https://content.airhex.com/content/logos/airlines_${c}_200_200_s.png`
   );
   const dirs = ['flightaware_logos', 'radarbox_logos', 'custom_logos', 'logos'];
   for (const d of dirs) {
