@@ -17,3 +17,8 @@ Changes in v31:
 
 
 Version v31.5: restored the reserved airline logo area to the earlier size and expanded airline logo source candidates: AirHex SVG/PNG, Aviasales/Travelpayouts, Kiwi, and Jxck-S fallback.
+
+
+## v31.6
+- Route lookup fixed: Auto / VRS free route lookup now works without API key and prevents docs pages from appearing.
+- Settings spacing improved between Buy Me a Coffee and Save.
