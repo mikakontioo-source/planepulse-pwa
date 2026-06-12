@@ -1,24 +1,21 @@
-# SpotPlane PWA v31
+# SpotPlane PWA v34
 
-Static Vercel/PWA build.
+Static Vercel/PWA package.
+
+## Deploy
+Upload only these to GitHub/Vercel:
+- api/
+- public/
+- vercel.json
+- README.md
 
 Vercel settings:
-- Install Command: empty
-- Build Command: empty
 - Output Directory: public
+- Build Command: empty
+- Install Command: empty
 
-Changes in v31:
-- route label replaces FLIGHT when a route is found
-- AirHex logo candidates first, fallback logo sources remain
-- airline background circle removed
-- compass base stays fixed and only the arrow rotates
-- new climbing/descending aircraft SVG indicator
-- aircraft-photo overlay transparency lightened from 85% to 70%
-
-
-Version v31.5: restored the reserved airline logo area to the earlier size and expanded airline logo source candidates: AirHex SVG/PNG, Aviasales/Travelpayouts, Kiwi, and Jxck-S fallback.
-
-
-## v31.6
-- Route lookup fixed: Auto / VRS free route lookup now works without API key and prevents docs pages from appearing.
-- Settings spacing improved between Buy Me a Coffee and Save.
+## Changes
+- Center climb/descend aircraft icon is 20% smaller and remains white.
+- Mini radar aircraft markers use the provided plainplane.svg shape.
+- Mini radar spreads nearby aircraft slightly more.
+- Route text now displays city names when airport codes are known, e.g. Helsinki → Barcelona, and falls back to HEL → BCN / Flight.
