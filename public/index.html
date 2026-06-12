@@ -34,6 +34,14 @@
 .radarDot{fill:var(--yellow);opacity:.95}
 @media(max-width:740px){.airlineTrend{width:30px;height:30px;margin-bottom:10px}.compactCompass{margin-bottom:8px;min-height:45px}.compactNeedle{width:36px;height:14px;margin-bottom:4px}.miniRadar{width:78px;height:78px}.radarLabel{font-size:8px}.radarTrail{stroke-width:1.4}.radarRing{stroke-width:1}}
 @media(max-width:390px){.miniRadar{width:68px;height:68px}.compactNeedle{width:32px;height:12px}.radarLabel{display:none}}
+
+/* v33: mini radar replaces compass; center aircraft icon shows climb/level/descent */
+.trendPlane{background:#fff;mask:url('/icons/plane_horz.svg') center/contain no-repeat;-webkit-mask:url('/icons/plane_horz.svg') center/contain no-repeat;filter:drop-shadow(0 0 18px rgba(255,255,255,.16));transition:transform .25s ease, opacity .25s ease}
+.trendPlane.pulse{animation:whitePulse 1.8s ease-in-out infinite}
+@keyframes whitePulse{0%,100%{opacity:.70;transform:scale(.96) rotate(var(--rot,0deg))}50%{opacity:1;transform:scale(1.06) rotate(var(--rot,0deg))}}
+.compassBox{justify-content:center}.miniRadar{width:clamp(170px,18vw,265px);height:clamp(170px,18vw,265px)}
+@media(max-width:740px){.miniRadar{width:92px;height:92px}.trendPlane{width:58px;height:58px}}
+@media(max-width:390px){.miniRadar{width:82px;height:82px}.trendPlane{width:48px;height:48px}}
 </style>
 </head>
 <body>
@@ -47,19 +55,18 @@
     </header>
     <div class="rule"></div>
     <section class="hero" id="hero">
-      <aside class="airlineBox"><div class="airlineDisplay"><div id="climbArrow" class="climbArrow airlineTrend" aria-label="Vertical trend"></div><div class="logoCircle"><img id="airlineLogo" class="airlineLogo" alt=""><div id="airlineFallback" class="airlineFallback">--</div></div><div id="airlineCode" class="airlineCode">--</div></div></aside>
+      <aside class="airlineBox"><div class="airlineDisplay"><div class="logoCircle"><img id="airlineLogo" class="airlineLogo" alt=""><div id="airlineFallback" class="airlineFallback">--</div></div><div id="airlineCode" class="airlineCode">--</div></div></aside>
       <section class="centerStage">
         <div id="noData" style="display:none"><div class="noData">NO DATA</div><div class="subtle">No aircraft nearby</div></div>
         <div id="aircraftData">
           <div id="routeText" class="label">Flight</div>
           <div id="flightCode" class="flightCode">----</div>
-          <img class="mainPlane" src="/icons/main_logo.svg" alt="Aircraft">
+          <div id="mainPlaneTrend" class="mainPlane trendPlane" aria-label="Vertical trend"></div>
           <div id="typeReg" class="typeReg">----</div>
           <div id="nextNearby" class="nextNearby"></div>
         </div>
       </section>
       <aside class="compassBox">
-        <div class="compactCompass" aria-label="Direction"><div id="compassNeedle" class="compassNeedle compactNeedle"></div><div id="compassText" class="compassText">---</div></div>
         <svg id="miniRadar" class="miniRadar" viewBox="0 0 220 220" role="img" aria-label="Mini radar"></svg>
       </aside>
     </section>
@@ -83,7 +90,7 @@
   <label class="toggleRow"><span>Aircraft photo background <small style="color:#888">Planespotters</small></span><input id="photos" type="checkbox"></label>
   <div class="field"><label>Route API</label><select id="routeProvider"><option value="vrs">Auto / VRS free route</option><option value="off">Off / Flight fallback</option><option value="aerodatabox">AeroDataBox</option><option value="aviationstack">AviationStack</option></select></div>
   <div class="field"><label>Route API key</label><input id="routeApiKey" type="password" placeholder="Only for AeroDataBox / AviationStack"><div class="helpText">Auto / VRS works without an API key. Paid providers need their own key.</div></div>
-  <div class="diagnostics"><h3>Diagnostics</h3><div class="diagLine"><span>Aircraft</span><b id="diagAircraft">--</b></div><div class="diagLine"><span>Registration</span><b id="diagReg">--</b></div><div class="diagLine"><span>ICAO24</span><b id="diagHex">--</b></div><div class="diagLine"><span>Airline</span><b id="diagAirline">--</b></div><div class="diagLine"><span>Logo</span><b id="diagLogo">--</b></div><div class="diagLine"><span>Photo</span><b id="diagPhoto">--</b></div><div class="diagLine"><span>Route</span><b id="diagRoute">--</b></div></div>
+  <div class="diagnostics"><h3>Diagnostics</h3><div class="diagLine"><span>Aircraft</span><b id="diagAircraft">--</b></div><div class="diagLine"><span>Registration</span><b id="diagReg">--</b></div><div class="diagLine"><span>ICAO24</span><b id="diagHex">--</b></div><div class="diagLine"><span>Airline</span><b id="diagAirline">--</b></div><div class="diagLine"><span>Logo</span><b id="diagLogo">--</b></div><div class="diagLine"><span>Photo</span><b id="diagPhoto">--</b></div><div class="diagLine"><span>Route</span><b id="diagRoute">--</b></div><div class="diagLine"><span>GPS</span><b id="diagGps">--</b></div><div class="diagLine"><span>Aircraft API</span><b id="diagAircraftApi">--</b></div><div class="diagLine"><span>Raw / Positioned</span><b id="diagCounts">--</b></div></div>
   <div class="aboutBlock"><h3>About</h3><p><b>SpotPlane</b> is a premium live aircraft display for your home, office, TV or tablet.</p><p>It focuses on the most interesting aircraft nearby and presents it beautifully with live flight data, airline branding and aircraft photography.</p><p class="taglineText">Spot the Plane. Own the Sky.</p><p>Contact: <a class="contactLink" href="mailto:support@spotplane.app">support@spotplane.app</a></p><a class="supportLink" href="https://www.buymeacoffee.com/spotplane" target="_blank" rel="noopener">☕ Support SpotPlane</a></div>
   <button id="saveSettings" class="saveBtn">Save</button><button id="closeSettings" class="closeBtn">Close</button>
 </section></div>
@@ -95,7 +102,19 @@ function km(n){return isFinite(n)?`${Number(n).toFixed(Number(n)<10?1:0)} km`:'-
 function toRad(d){return d*Math.PI/180}function distKm(a,b,c,d){const R=6371;const x=toRad(c-a),y=toRad(d-b);const q=Math.sin(x/2)**2+Math.cos(toRad(a))*Math.cos(toRad(c))*Math.sin(y/2)**2;return 2*R*Math.asin(Math.sqrt(q))}
 function bearing(a,b,c,d){const y=Math.sin(toRad(d-b))*Math.cos(toRad(c));const x=Math.cos(toRad(a))*Math.sin(toRad(c))-Math.sin(toRad(a))*Math.cos(toRad(c))*Math.cos(toRad(d-b));return (Math.atan2(y,x)*180/Math.PI+360)%360}
 function dir(deg){const dirs=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];return dirs[Math.round(deg/22.5)%16]}
-function norm(a,s){const lat=a.lat??a.latitude; const lon=a.lon??a.longitude; const altFt=a.alt_baro??a.alt_geom??a.baro_altitude; const gs=a.gs??a.velocity; const reg=a.r||a.reg||a.registration||''; return {raw:a,lat,lon,flight:(a.flight||a.callsign||a.call||a.hex||'').trim(),type:(a.t||a.type||a.aircraft_type||'').trim(),reg:reg.trim(),alt:typeof altFt==='number'?altFt*0.3048:NaN,speed:typeof gs==='number'?gs*1.852:NaN,track:a.track??a.true_track??0,vr:a.baro_rate??a.geom_rate??a.vertical_rate??0,hex:a.hex||a.icao24||'',airline:(a.flight||'').trim().slice(0,3).toUpperCase(),route:a.route||a.rte||a.flight_route||a.route_text||''}}
+function num(v){if(v===null||v===undefined||v==='')return NaN; const n=Number(v); return Number.isFinite(n)?n:NaN}
+function norm(a,s){
+  const lp=a.lastPosition||a.last_position||{};
+  const lat=num(a.lat??a.latitude??lp.lat??a.rr_lat);
+  const lon=num(a.lon??a.longitude??lp.lon??a.rr_lon);
+  const altRaw=a.alt_baro??a.alt_geom??a.baro_altitude??a.altitude;
+  let alt=NaN; if(typeof altRaw==='number') alt=altRaw*0.3048; else if(typeof altRaw==='string'&&altRaw.toLowerCase()!=='ground') alt=num(altRaw)*0.3048;
+  const gsRaw=a.gs??a.velocity??a.speed; const gs=num(gsRaw);
+  const reg=(a.r||a.reg||a.registration||'').trim();
+  const flight=(a.flight||a.callsign||a.call||a.hex||'').trim();
+  const track=num(a.track??a.true_track??a.heading??0);
+  return {raw:a,lat,lon,flight,type:(a.t||a.type||a.aircraft_type||'').trim(),reg,alt,speed:Number.isFinite(gs)?gs*1.852:NaN,track:Number.isFinite(track)?track:0,vr:num(a.baro_rate??a.geom_rate??a.vertical_rate??0),hex:a.hex||a.icao24||'',airline:flight.slice(0,3).toUpperCase(),route:a.route||a.rte||a.flight_route||a.route_text||''}
+}
 function score(a,mode){if(mode==='lowest')return a.alt||999999;if(mode==='audible')return (a.distance*1.8)+(Math.max(0,a.alt)/1000);return a.distance}
 function airlineName(code){const map={FIN:'FINNAIR',RYR:'RYANAIR',DLH:'LUFTHANSA',SAS:'SAS',KLM:'KLM',AFR:'AIR FRANCE',BAW:'BRITISH AIRWAYS',NSZ:'NORSE',TAY:'ASL',PGT:'PEGASUS'};return map[(code||'').slice(0,3)]||((code||'AIRLINE').slice(0,3));}
 const ICAO_TO_IATA={FIN:'AY',RYR:'FR',DLH:'LH',SAS:'SK',KLM:'KL',AFR:'AF',BAW:'BA',AAL:'AA',UAL:'UA',DAL:'DL',EZY:'U2',WZZ:'W6',THY:'TK',QTR:'QR',UAE:'EK',SWR:'LX',IBE:'IB',PGT:'PC',NAX:'DY',NSZ:'N0',TAY:'3V'};
@@ -170,9 +189,9 @@ async function resolveRoute(ac){
 function trend(ac){const v=Number(ac.vr)||0;if(v>128)return {rot:-25,pulse:true};if(v<-128)return {rot:25,pulse:true};return {rot:0,pulse:false}}
 function radarKey(a){return a.hex||a.flight||`${a.lat},${a.lon}`}
 function pruneTracks(){const cutoff=Date.now()-120000;for(const k of Object.keys(state.tracks)){state.tracks[k]=state.tracks[k].filter(p=>p.t>=cutoff);if(!state.tracks[k].length)delete state.tracks[k];}}
-function radarPos(ac, radiusKm){const r=Math.min(1,Math.max(0,(ac.distance||0)/(radiusKm||50)));const ang=(ac.bearing||0)*Math.PI/180;return {x:110+Math.sin(ang)*86*r,y:110-Math.cos(ang)*86*r}}
-function updateRadarHistory(list,radiusKm){const now=Date.now();pruneTracks();(list||[]).slice(0,3).forEach(ac=>{const k=radarKey(ac);const pos=radarPos(ac,radiusKm);if(!state.tracks[k])state.tracks[k]=[];const last=state.tracks[k][state.tracks[k].length-1];if(!last||Math.hypot(last.x-pos.x,last.y-pos.y)>1.5)state.tracks[k].push({...pos,t:now});state.tracks[k]=state.tracks[k].filter(p=>p.t>=now-120000).slice(-36);});}
-function renderMiniRadar(list,radiusKm){const svg=$('miniRadar'); if(!svg)return; updateRadarHistory(list,radiusKm); let h='';h+=`<circle class="radarRing" cx="110" cy="110" r="96"></circle><circle class="radarRing" cx="110" cy="110" r="62" opacity=".45"></circle><path class="radarCross" d="M110 20v180M20 110h180"></path><circle class="radarDot" cx="110" cy="110" r="4.5"></circle>`;(list||[]).slice(0,3).forEach((ac,i)=>{const k=radarKey(ac);const pts=(state.tracks[k]||[]).map(p=>`${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');if(pts)h+=`<polyline class="radarTrail" points="${pts}"></polyline>`;const p=radarPos(ac,radiusKm);const rot=ac.track||ac.bearing||0;const label=(ac.flight||ac.hex||'').slice(0,7);h+=`<g transform="translate(${p.x.toFixed(1)} ${p.y.toFixed(1)}) rotate(${rot})"><path class="radarPlane ${i===0?'primary':''}" d="M0,-9 L5,7 L0,4 L-5,7 Z"></path></g>`;h+=`<text class="radarLabel" x="${p.x.toFixed(1)}" y="${(p.y+18).toFixed(1)}">${label}</text>`;});svg.innerHTML=h;}
+function radarPos(ac, radiusKm){const raw=Math.max(0,(ac.distance||0)/(radiusKm||50));const r=Math.min(1,Math.sqrt(raw));const ang=(ac.bearing||0)*Math.PI/180;return {x:110+Math.sin(ang)*88*r,y:110-Math.cos(ang)*88*r}}
+function updateRadarHistory(list,radiusKm){const now=Date.now();pruneTracks();const visualRadius=Math.max(3,Math.min(radiusKm||50, Math.max(...(list||[]).map(a=>a.distance||0),3)*1.35));(list||[]).slice(0,3).forEach(ac=>{const k=radarKey(ac);const pos=radarPos(ac,visualRadius);if(!state.tracks[k])state.tracks[k]=[];const last=state.tracks[k][state.tracks[k].length-1];if(!last||Math.hypot(last.x-pos.x,last.y-pos.y)>1.5)state.tracks[k].push({...pos,t:now});state.tracks[k]=state.tracks[k].filter(p=>p.t>=now-120000).slice(-36);});}
+function renderMiniRadar(list,radiusKm){const svg=$('miniRadar'); if(!svg)return; updateRadarHistory(list,radiusKm); const visualRadius=Math.max(3,Math.min(radiusKm||50, Math.max(...(list||[]).map(a=>a.distance||0),3)*1.35)); let h='';h+=`<circle class="radarRing" cx="110" cy="110" r="96"></circle><circle class="radarRing" cx="110" cy="110" r="62" opacity=".45"></circle><path class="radarCross" d="M110 20v180M20 110h180"></path><circle class="radarDot" cx="110" cy="110" r="4.5"></circle>`;(list||[]).slice(0,3).forEach((ac,i)=>{const k=radarKey(ac);const pts=(state.tracks[k]||[]).map(p=>`${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');if(pts)h+=`<polyline class="radarTrail" points="${pts}"></polyline>`;const p=radarPos(ac,visualRadius);const rot=ac.track||ac.bearing||0;const label=(ac.flight||ac.hex||'').slice(0,7);h+=`<g transform="translate(${p.x.toFixed(1)} ${p.y.toFixed(1)}) rotate(${rot})"><path class="radarPlane ${i===0?'primary':''}" d="M0,-9 L5,7 L0,4 L-5,7 Z"></path></g>`;h+=`<text class="radarLabel" x="${p.x.toFixed(1)}" y="${(p.y+18).toFixed(1)}">${label}</text>`;});svg.innerHTML=h;}
 
 async function render(ac,next=[]){
   $('noData').style.display=ac?'none':'block';
@@ -184,12 +203,9 @@ async function render(ac,next=[]){
   $('distance').textContent=isFinite(ac.distance)?(Number(ac.distance).toFixed(Number(ac.distance)<10?1:0)):'--';
   $('altitude').textContent=isFinite(ac.alt)?Math.round(ac.alt).toLocaleString('en-US'):'--';
   $('speed').textContent=isFinite(ac.speed)?Math.round(ac.speed):'--';
-  $('compassText').textContent=dir(ac.bearing);
-  $('compassNeedle').style.transform=`rotate(${(ac.bearing||0)-90}deg)`;
   const tr=trend(ac);
-  $('climbArrow').style.setProperty('--rot',`${tr.rot}deg`);
-  $('climbArrow').style.transform=`rotate(${tr.rot}deg)`;
-  $('climbArrow').classList.toggle('pulse',tr.pulse);
+  const mp=$('mainPlaneTrend');
+  if(mp){mp.style.setProperty('--rot',`${tr.rot}deg`);mp.style.transform=`rotate(${tr.rot}deg)`;mp.classList.toggle('pulse',tr.pulse);}
   const nxt=next.slice(0,2).map(x=>`${x.flight||x.hex} ${x.distance.toFixed(1)} km`).join('  |  ');
   $('nextNearby').textContent=nxt;
 
@@ -220,11 +236,40 @@ async function render(ac,next=[]){
 function updateDiagnostics(){
   const d=state.diag||{};
   const set=(id,val)=>{const el=$(id); if(el)el.textContent=val||'--'};
-  set('diagAircraft',d.aircraft); set('diagReg',d.reg); set('diagHex',d.hex); set('diagAirline',d.airline); set('diagLogo',d.logo); set('diagPhoto',d.photo); set('diagRoute',d.route);
+  set('diagAircraft',d.aircraft); set('diagReg',d.reg); set('diagHex',d.hex); set('diagAirline',d.airline); set('diagLogo',d.logo); set('diagPhoto',d.photo); set('diagRoute',d.route); set('diagGps',d.gps); set('diagAircraftApi',d.aircraftApi); set('diagCounts',`${d.rawCount||'--'} / ${d.positionCount||'--'}`);
 }
 async function updateWeather(s){try{const r=await fetch(`/api/weather?lat=${s.lat}&lon=${s.lon}`);const j=await r.json();$('weather').textContent=isFinite(j.temperature)?`${Math.round(j.temperature)}°C`:'--°C';$('wind').textContent=isFinite(j.wind)?`${Math.round(j.wind)} km/h`:'-- km/h'}catch(e){}}
-async function update(){const s=settings();let loc={lat:Number(s.lat),lon:Number(s.lon)};if(s.locationSource==='gps'&&navigator.geolocation){try{loc=await new Promise((res,rej)=>navigator.geolocation.getCurrentPosition(p=>res({lat:p.coords.latitude,lon:p.coords.longitude}),rej,{enableHighAccuracy:true,timeout:5000,maximumAge:30000}))}catch(e){}}
- await updateWeather(loc);try{const nm=(Number(s.radius)||50)*0.539957;const r=await fetch(`/api/aircraft?lat=${loc.lat}&lon=${loc.lon}&dist=${nm.toFixed(1)}`);const j=await r.json();const list=(j.aircraft||j.ac||[]).map(x=>norm(x)).filter(x=>isFinite(x.lat)&&isFinite(x.lon)).map(x=>({...x,distance:distKm(loc.lat,loc.lon,x.lat,x.lon),bearing:bearing(loc.lat,loc.lon,x.lat,x.lon)})).sort((a,b)=>a.distance-b.distance);state.aircraft=list;const sorted=[...list].sort((a,b)=>score(a,s.mode)-score(b,s.mode));const primary=sorted[0];const next=list.filter(x=>x!==primary).slice(0,2);renderMiniRadar([primary,...next].filter(Boolean), Number(s.radius)||50);render(primary,next)}catch(e){$('status').textContent='Data error';render(null)}}
+async function update(){
+  const s=settings();
+  let loc={lat:Number(s.lat),lon:Number(s.lon)};
+  if(!Number.isFinite(loc.lat)||!Number.isFinite(loc.lon)){loc={lat:defaults.lat,lon:defaults.lon}}
+  if(s.locationSource==='gps'&&navigator.geolocation){
+    try{
+      loc=await new Promise((res,rej)=>navigator.geolocation.getCurrentPosition(p=>res({lat:p.coords.latitude,lon:p.coords.longitude}),rej,{enableHighAccuracy:true,timeout:7000,maximumAge:30000}))
+      state.diag.gps='OK';
+    }catch(e){state.diag.gps='FALLBACK'}
+  } else state.diag.gps='FIXED';
+  updateWeather(loc).catch(()=>{});
+  try{
+    const nm=(Number(s.radius)||50)*0.539957;
+    const r=await fetch(`/api/aircraft?lat=${encodeURIComponent(loc.lat)}&lon=${encodeURIComponent(loc.lon)}&dist=${nm.toFixed(1)}`,{cache:'no-store'});
+    const j=await r.json();
+    const raw=(j.aircraft||j.ac||[]);
+    state.diag.aircraftApi=j.source||'OK';
+    state.diag.rawCount=String(raw.length||0);
+    const list=raw.map(x=>norm(x)).filter(x=>Number.isFinite(x.lat)&&Number.isFinite(x.lon)).map(x=>({...x,distance:distKm(loc.lat,loc.lon,x.lat,x.lon),bearing:bearing(loc.lat,loc.lon,x.lat,x.lon)})).sort((a,b)=>a.distance-b.distance);
+    state.diag.positionCount=String(list.length||0);
+    state.aircraft=list;
+    const sorted=[...list].sort((a,b)=>score(a,s.mode)-score(b,s.mode));
+    const primary=sorted[0];
+    const next=list.filter(x=>x!==primary).slice(0,2);
+    renderMiniRadar([primary,...next].filter(Boolean), Number(s.radius)||50);
+    render(primary,next);
+  }catch(e){
+    state.diag.aircraftApi='ERROR'; state.diag.rawCount='--'; state.diag.positionCount='--'; updateDiagnostics();
+    $('status').textContent='Data error'; renderMiniRadar([], Number(s.radius)||50); render(null);
+  }
+}
 function start(){clearInterval(state.timer);update();state.timer=setInterval(update,Number(settings().refresh)||10000)}
 function tickClock(){$('clock').textContent=new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}setInterval(tickClock,1000);tickClock();
 function loadSettings(){const s=settings();['lat','lon','radius','refresh','mode','locationSource','routeProvider','routeApiKey'].forEach(id=>{if($(id))$(id).value=s[id]||''});$('photos').checked=!!s.photos}
