@@ -6,7 +6,7 @@ function cleanFlight(v) {
 
 function cleanProvider(v) {
   const p = String(v || 'vrs').toLowerCase();
-  return ['off', 'vrs', 'aerodatabox', 'aviationstack'].includes(p) ? p : 'vrs';
+  return ['off', 'adsbdb', 'vrs', 'aerodatabox', 'aviationstack'].includes(p) ? p : 'adsbdb';
 }
 
 function normalizeRoute(dep, arr) {
@@ -54,6 +54,17 @@ function parseAnyRoute(json) {
   return walk(json);
 }
 
+
+function parseAdsbdb(json) {
+  const fr = json && json.response && json.response.flightroute;
+  if (!fr) return '';
+  const dep = fr.origin || {};
+  const arr = fr.destination || {};
+  const route = normalizeRoute(dep.iata_code || dep.icao_code, arr.iata_code || arr.icao_code);
+  if (route) return route;
+  return parseAnyRoute(fr);
+}
+
 function parseAviationStack(json) {
   const rows = Array.isArray(json && json.data) ? json.data : [];
   for (const f of rows) {
@@ -93,6 +104,12 @@ async function lookupVrs(flight) {
   return json ? parseAnyRoute(json) : '';
 }
 
+async function lookupAdsbdb(flight) {
+  const url = `https://api.adsbdb.com/v0/callsign/${encodeURIComponent(flight)}`;
+  const json = await fetchJsonSafe(url, { headers: { 'Accept': 'application/json' } });
+  return json ? parseAdsbdb(json) : '';
+}
+
 module.exports = async function handler(req, res) {
   const flight = cleanFlight(req.query && req.query.flight);
   const provider = cleanProvider(req.query && req.query.provider);
@@ -106,9 +123,18 @@ module.exports = async function handler(req, res) {
   if (CACHE[cacheKey]) return res.status(200).json(CACHE[cacheKey]);
 
   try {
+    if (provider === 'adsbdb') {
+      const route = await lookupAdsbdb(flight);
+      const out = { route, source: 'adsbdb', flight, reason: route ? 'found' : 'not-found' };
+      CACHE[cacheKey] = out;
+      return res.status(200).json(out);
+    }
+
     if (provider === 'vrs') {
-      const route = await lookupVrs(flight);
-      const out = { route, source: 'vrs', flight, reason: route ? 'found' : 'not-found' };
+      let route = await lookupVrs(flight);
+      let source = 'vrs';
+      if (!route) { route = await lookupAdsbdb(flight); source = route ? 'adsbdb' : 'vrs'; }
+      const out = { route, source, flight, reason: route ? 'found' : 'not-found' };
       CACHE[cacheKey] = out;
       return res.status(200).json(out);
     }

@@ -1,21 +1,12 @@
-# SpotPlane PWA v34
+# SpotPlane PWA v35
 
-Static Vercel/PWA package.
-
-## Deploy
-Upload only these to GitHub/Vercel:
-- api/
-- public/
-- vercel.json
-- README.md
+Changes:
+- Center climb/descent aircraft icon is 20% smaller and centered in the main aircraft area.
+- Mini radar uses the small aircraft icon for nearby aircraft.
+- Route lookup improved: ADSBdb is now the default route source, with VRS/AeroDataBox/AviationStack fallback options.
+- Route display tries to show city names such as Helsinki → Barcelona; fallback is airport codes or Flight.
 
 Vercel settings:
 - Output Directory: public
 - Build Command: empty
 - Install Command: empty
-
-## Changes
-- Center climb/descend aircraft icon is 20% smaller and remains white.
-- Mini radar aircraft markers use the provided plainplane.svg shape.
-- Mini radar spreads nearby aircraft slightly more.
-- Route text now displays city names when airport codes are known, e.g. Helsinki → Barcelona, and falls back to HEL → BCN / Flight.
